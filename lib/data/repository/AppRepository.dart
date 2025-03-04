@@ -1,3 +1,4 @@
+import '../model/favaurite_model.dart';
 import '../scource/remote/response/base_response.dart';
 import '../scource/remote/response/category/chip/chips_response.dart';
 import '../scource/remote/response/detail/available_stores/available_stores.dart';
@@ -31,4 +32,8 @@ abstract class AppRepository{
   Future<BaseResponse<PopupMenuResponse>> getPopupMenuCatalog();
   Future<BaseResponse<ChipsResponse>> getChips(String slug);
   Future<BaseResponse<FiltersResponse>> getCatalogByFilter(String slug, String sort, int page);
+
+  Future<bool> hasFavourite(int productId);
+
+  Future<bool> toggleFavourite(FavouriteModel product);
 }

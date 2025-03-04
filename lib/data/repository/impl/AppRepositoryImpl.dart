@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 
 import '../../../di/di.dart';
+import '../../model/favaurite_model.dart';
+import '../../scource/locel/hive_helper.dart';
 import '../../scource/remote/api/detail_api.dart';
 import '../../scource/remote/api/special_categories_api.dart';
 import '../../scource/remote/response/base_response.dart';
@@ -158,6 +160,29 @@ class AppRepositoryImpl extends AppRepository {
       return response;
     } catch (e) {
       rethrow;
+    }
+  }
+
+  @override
+  Future<bool> hasFavourite(int productId) async {
+    try {
+      final favourites = HiveHelper.getFavourite();
+      /*final result = favourites.any((element) {
+        return element == product;
+      });*/
+      return HiveHelper.hasFavourite(productId);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> toggleFavourite(FavouriteModel product) async {
+    try {
+      HiveHelper.toggleFavourite(product);
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 }
