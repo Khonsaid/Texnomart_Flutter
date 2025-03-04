@@ -8,7 +8,7 @@ import '../../widgets/loading.dart';
 
 class ItemPopularCategory extends StatelessWidget {
   final List<SpecialCategoryDataElement>? data;
-  final Function(String) onTap;
+  final Function({required String slug,required  String title}) onTap;
 
   const ItemPopularCategory({super.key, required this.data, required this.onTap});
 
@@ -30,7 +30,9 @@ class ItemPopularCategory extends StatelessWidget {
               return GestureDetector(
                 onTap: () {
                   if (data != null) {
-                    onTap(data![index].slug ?? ''); // Bosilgan kategoriyani jo‘natamiz
+                    onTap(
+                        slug: data![index].slug ?? '',
+                        title: data![index].title ?? ''); // Bosilgan kategoriyani jo‘natamiz
                   }
                 },
                 child: Container(
@@ -50,7 +52,8 @@ class ItemPopularCategory extends StatelessWidget {
                             width: double.infinity,
                             height: double.infinity,
                             placeholder: (context, url) => LoadingWidget(),
-                            errorWidget: (context, url, error) => const Icon(Icons.error, color: AppColors.primaryColor),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error, color: AppColors.primaryColor),
                           ),
                         ),
                         Positioned(

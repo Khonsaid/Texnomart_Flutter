@@ -20,6 +20,7 @@ import '../map/bloc/map_bloc.dart';
 import '../map/map_screen.dart';
 import '../widgets/home_load_price.dart';
 import '../widgets/loading.dart';
+import '../widgets/shimmer_effect_widget.dart';
 import 'bloc/detail_bloc.dart';
 import 'more_screen.dart';
 
@@ -126,14 +127,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                       return SizedBox(
                                         width: double.infinity,
                                         height: double.infinity,
-                                        child: Shimmer.fromColors(
-                                          baseColor: Colors.grey[300]!, // Asosiy kulrang
-                                          highlightColor:
-                                              Colors.grey[100]!, // Yaltirash effekti uchun och kulrang
-                                          child: Container(
-                                            color: Colors.white, // Shimmer effekti beriladigan joy
-                                          ),
-                                        ),
+                                        child: ShimmerEffectWidget()
                                       );
                                     },
                                     errorWidget: (context, url, error) => Icon(

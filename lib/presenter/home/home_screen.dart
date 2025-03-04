@@ -96,12 +96,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               padding: EdgeInsets.symmetric(vertical: 4),
                               child: ItemPopularCategory(
                                 data: state.specialCategories?.data?.data,
-                                onTap: (slug) {
+                                onTap: ({required String slug, required String title}) {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => BlocProvider(
-                                              create: (context) => CatalogBloc()..add(LoadCatalogEvent(slug)),
+                                              create: (context) =>
+                                                  CatalogBloc()..add(LoadCatalogEvent(slug, title)),
                                               child: CatalogScreen(),
                                             )),
                                   );
@@ -152,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         MaterialPageRoute(
                                             builder: (context) => BlocProvider(
                                                   create: (context) =>
-                                                      CatalogBloc()..add(LoadCatalogEvent('hity-prodazh')),
+                                                      CatalogBloc()..add(LoadCatalogEvent('hity-prodazh', 'Xit savdo')),
                                                   child: CatalogScreen(),
                                                 )));
                                   },

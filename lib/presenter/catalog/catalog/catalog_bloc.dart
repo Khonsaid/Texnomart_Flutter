@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+
 import '../../../../di/di.dart';
 import '../../../data/repository/AppRepository.dart';
 import '../../../data/scource/remote/response/base_response.dart';
@@ -15,16 +16,17 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
     on<LoadCatalogEvent>((event, emit) async {
       ChipsResponse? chipsResponse;
       FiltersResponse? filtersResponse;
+      emit(state.copyWith(
+          status: Status.loading, title: event.title, selectedIndex: event.index, slug: event.slug));
 
       try {
-        emit(state.copyWith(status: Status.loading));
         final List<dynamic> result = await Future.wait<dynamic>([
           productRepository.getChips(event.slug).catchError((e) {
-            print("TTT Chips API error: $e");
             return null; // Xatolik bo'lsa, null qaytaramiz
           }),
-          productRepository.getCatalogByFilter(event.slug, '-order_count', 1).catchError((e) {
-            print("TTT Filters API error: $e");
+          productRepository
+              .getCatalogByFilter(event.slug, state.sortByPopular ? '-order_count' : 'price', 1)
+              .catchError((e) {
             return null;
           }),
         ]);
@@ -42,12 +44,15 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
           filtersResponse: filtersResponse,
           products: filtersResponse?.products ?? [],
           currentPage: 1,
-          title: chipsResponse?.parent?.name,
           totalPages: filtersResponse?.pagination?.totalPage ?? 1,
         ));
       } catch (e) {
         emit(state.copyWith(status: Status.error));
       }
+    });
+    on<FilterChangeEvent>((event, emit) {
+      emit(state.copyWith(sortByPopular: !state.sortByPopular));
+      add(LoadCatalogEvent(state.slug ?? '', state.title ?? ''));
     });
   }
 }

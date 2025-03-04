@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:texnomart/utils/colors.dart';
 
 import '../catalog/catalog/catalog_bloc.dart';
 import '../catalog/catalog_screen.dart';
 import '../widgets/search_widget.dart';
+import '../widgets/shimmer_effect_widget.dart';
 import 'bloc/category_bloc.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -42,10 +42,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             statusBarColor: AppColors.primaryColor, // Status bar fon rangi
             statusBarIconBrightness: Brightness.dark, // Ikonkalar qora
           ),
-          child: BlocConsumer<CategoryBloc, CategoryState>(
-            listener: (context, state) {
-              print('TTT BlocConsumer ${state.popupMenuData?.length}');
-            },
+          child: BlocBuilder<CategoryBloc, CategoryState>(
             builder: (context, state) {
               return SafeArea(
                 child: Scaffold(
@@ -70,7 +67,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                   builder: (context) => BlocProvider(
                                                       create: (context) => CatalogBloc()
                                                         ..add(LoadCatalogEvent(
-                                                            state.popupMenuData?[index].slug ?? '')),
+                                                            state.popupMenuData?[index].slug ?? '',
+                                                            state.popupMenuData?[index].name ?? '')),
                                                       child: CatalogScreen()),
                                                 ),
                                               );
@@ -107,7 +105,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               : Flexible(
                                   child: ListView.separated(
                                       itemBuilder: (context, index) => Padding(
-                                            padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 16),
+                                            padding:
+                                                const EdgeInsets.symmetric(vertical: 6.0, horizontal: 16),
                                             child: Row(
                                               spacing: 12,
                                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -118,31 +117,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                   elevation: 0.5,
                                                   color: AppColors.bgItemsColor,
                                                   child: SizedBox(
-                                                    height: 32,
-                                                    width: 32,
-                                                    child: Shimmer.fromColors(
-                                                      baseColor: Colors.grey[300]!, // Asosiy kulrang
-                                                      highlightColor: Colors
-                                                          .grey[100]!, // Yaltirash effekti uchun och kulrang
-                                                      child: Container(
-                                                        color: Colors.white, // Shimmer effekti beriladigan joy
-                                                      ),
-                                                    ),
-                                                  ),
+                                                      height: 32, width: 32, child: ShimmerEffectWidget()),
                                                 ),
                                                 SizedBox(width: 8),
                                                 Expanded(
-                                                  child: SizedBox(
-                                                    height: 20,
-                                                    child: Shimmer.fromColors(
-                                                      baseColor: Colors.grey[300]!, // Asosiy kulrang
-                                                      highlightColor: Colors
-                                                          .grey[100]!, // Yaltirash effekti uchun och kulrang
-                                                      child: Container(
-                                                        color: Colors.white, // Shimmer effekti beriladigan joy
-                                                      ),
-                                                    ),
-                                                  ),
+                                                  child: SizedBox(height: 20, child: ShimmerEffectWidget()),
                                                 ),
                                               ],
                                             ),

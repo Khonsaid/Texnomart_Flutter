@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:texnomart/presenter/widgets/shimmer_effect_widget.dart';
 import 'package:texnomart/utils/colors.dart';
 import 'package:texnomart/utils/extension.dart';
 
@@ -55,13 +56,7 @@ class HomeLoadPrice extends StatelessWidget {
             ) : SizedBox(
               width: 200,
               height: 24,
-              child: Shimmer.fromColors(
-                baseColor: Colors.grey[300]!, // Asosiy kulrang
-                highlightColor: Colors.grey[100]!, // Yaltirash effekti uchun och kulrang
-                child: Container(
-                  color: Colors.white, // Shimmer effekti beriladigan joy
-                ),
-              ),
+              child: ShimmerEffectWidget()
             ),
             Container(
               height: 56,

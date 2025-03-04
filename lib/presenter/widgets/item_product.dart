@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:texnomart/presenter/widgets/shimmer_effect_widget.dart';
 import 'package:texnomart/utils/colors.dart';
 import 'package:texnomart/utils/extension.dart';
 
@@ -43,7 +43,6 @@ class _ItemProductState extends State<ItemProduct> {
 
   @override
   void initState() {
-    print('TTT item product ${widget.id}');
     isLiked = HiveHelper.hasFavourite(widget.id ?? 0);
     isAdded = HiveHelper.hasBasketModel(widget.id ?? 0);
     super.initState();
@@ -206,20 +205,8 @@ class _ItemProductState extends State<ItemProduct> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AspectRatio(
-                  aspectRatio: 3 / 3,
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: double.infinity,
-                    child: Shimmer.fromColors(
-                      baseColor: Colors.grey[300]!, // Asosiy kulrang
-                      highlightColor: Colors.grey[100]!, // Yaltirash effekti uchun och kulrang
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(12)), color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
+                    aspectRatio: 3 / 3,
+                    child: ClipRRect(borderRadius: BorderRadius.circular(12), child: ShimmerEffectWidget())),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -227,64 +214,19 @@ class _ItemProductState extends State<ItemProduct> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          width: 140,
-                          height: 26,
-                          child: Shimmer.fromColors(
-                            baseColor: Colors.grey[300]!, // Asosiy kulrang
-                            highlightColor: Colors.grey[100]!, // Yaltirash effekti uchun och kulrang
-                            child: Container(
-                              color: Colors.white, // Shimmer effekti beriladigan joy
-                            ),
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: AppColors.bgItemsColor, borderRadius: BorderRadius.circular(8)),
-                          padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
-                          child: SizedBox(
-                            width: 100,
-                            height: 20,
-                            child: Shimmer.fromColors(
-                              baseColor: Colors.grey[300]!, // Asosiy kulrang
-                              highlightColor: Colors.grey[100]!, // Yaltirash effekti uchun och kulrang
-                              child: Container(
-                                color: Colors.white, // Shimmer effekti beriladigan joy
-                              ),
-                            ),
-                          ),
-                        ),
+                        SizedBox(width: 140, height: 26, child: ShimmerEffectWidget()),
+                        SizedBox(width: 100, height: 20, child: ShimmerEffectWidget()),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(
-                              width: 100,
-                              height: 24,
-                              child: Shimmer.fromColors(
-                                baseColor: Colors.grey[300]!, // Asosiy kulrang
-                                highlightColor: Colors.grey[100]!, // Yaltirash effekti uchun och kulrang
-                                child: Container(
-                                  color: Colors.white, // Shimmer effekti beriladigan joy
-                                ),
-                              ),
-                            ),
+                            SizedBox(width: 100, height: 24, child: ShimmerEffectWidget()),
                             Container(
                               padding: EdgeInsets.all(4),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              child: SizedBox(
-                                width: 28,
-                                height: 28,
-                                child: Shimmer.fromColors(
-                                  baseColor: Colors.grey[300]!, // Asosiy kulrang
-                                  highlightColor: Colors.grey[100]!, // Yaltirash effekti uchun och kulrang
-                                  child: Container(
-                                    color: Colors.white, // Shimmer effekti beriladigan joy
-                                  ),
-                                ),
-                              ),
+                              child: SizedBox(width: 28, height: 28, child: ShimmerEffectWidget()),
                             )
                           ],
                         )
