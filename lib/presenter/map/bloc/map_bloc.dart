@@ -8,7 +8,6 @@ part 'map_state.dart';
 class MapBloc extends Bloc<MapEvent, MapState> {
   MapBloc() : super(MapState()) {
     on<LoadMapData>((event, emit) {
-      print("TTT LoadMapData ${event.data}");
       emit(state.copyWith(data: event.data));
     });
   }

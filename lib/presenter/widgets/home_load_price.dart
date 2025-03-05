@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:texnomart/presenter/widgets/shimmer_effect_widget.dart';
 import 'package:texnomart/utils/colors.dart';
 import 'package:texnomart/utils/extension.dart';
@@ -44,20 +43,18 @@ class HomeLoadPrice extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 2),
-            loanPrice != null ? Row(
-              children: [
-                Text((loanPrice.toString()).formatAsMoney(),
-                    style: TextStyle(
-                        color: AppColors.fontPrimaryColor, fontWeight: FontWeight.bold, fontSize: 24)),
-                Text(" so'm",
-                    style: TextStyle(
-                        color: AppColors.fontPrimaryColor, fontWeight: FontWeight.bold, fontSize: 18)),
-              ],
-            ) : SizedBox(
-              width: 200,
-              height: 24,
-              child: ShimmerEffectWidget()
-            ),
+            loanPrice != null
+                ? Row(
+                    children: [
+                      Text((loanPrice.toString()).formatAsMoney(),
+                          style: TextStyle(
+                              color: AppColors.fontPrimaryColor, fontWeight: FontWeight.bold, fontSize: 24)),
+                      Text(" so'm",
+                          style: TextStyle(
+                              color: AppColors.fontPrimaryColor, fontWeight: FontWeight.bold, fontSize: 18)),
+                    ],
+                  )
+                : SizedBox(width: 200, height: 24, child: ShimmerEffectWidget()),
             Container(
               height: 56,
               decoration:
@@ -78,21 +75,21 @@ class HomeLoadPrice extends StatelessWidget {
                           BoxDecoration(color: AppColors.blueColor, borderRadius: BorderRadius.circular(10)),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
-                        child: Text("${(minimalLoanPrice?.minMonthlyPrice??'0').formatAsMoney()} so'mdan",
+                        child: Text("${(minimalLoanPrice?.minMonthlyPrice ?? '0').formatAsMoney()} so'mdan",
                             style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
                       ),
                     ),
-                    Text("${minimalLoanPrice?.monthNumber??'0'}/oy",style: TextStyle(fontSize: 13),),
+                    Text(
+                      "${minimalLoanPrice?.monthNumber ?? '0'}/oy",
+                      style: TextStyle(fontSize: 13),
+                    ),
                   ],
                 ),
               ),
             ),
             Text("Buyurtmani rasmiylashtirishda 12 oydan 24 oygacha muddatli to‘lovni tanlashingiz mumkin",
                 style: TextStyle(fontSize: 12, color: AppColors.fontSecondaryColor)),
-            BtnAddBasket(
-              isAdded: isAdded,
-              onTap: onTapBasket
-            ),
+            BtnAddBasket(isAdded: isAdded, onTap: onTapBasket),
             Divider(
               color: AppColors.bgItemsColor,
             ),

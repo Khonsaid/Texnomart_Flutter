@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:texnomart/presenter/basket/widgets/item_basket.dart';
+import 'package:texnomart/presenter/bottom/tab_provider.dart';
 import 'package:texnomart/utils/colors.dart';
 import 'package:texnomart/utils/extension.dart';
 
-import '../bottom/bottom_nav_bar.dart';
 import '../detail/bloc/detail_bloc.dart';
 import '../detail/detail_screen.dart';
 import 'bloc/card_bloc.dart';
@@ -57,8 +57,7 @@ class _BasketScreenState extends State<BasketScreen> {
           style: TextStyle(color: AppColors.fontPrimaryColor, fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),
-      body: BlocConsumer<CardBloc, CardState>(
-          listener: (context, state) {},
+      body: BlocBuilder<CardBloc, CardState>(
           builder: (context, state) => state.basketList?.isNotEmpty ?? false
               ? SingleChildScrollView(
                   controller: _scrollController,
@@ -239,10 +238,7 @@ class _BasketScreenState extends State<BasketScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          final containerState = context.findAncestorStateOfType<ContainerScreenState>();
-                          if (containerState != null) {
-                            containerState.setTabIndex(1); // Katalog sahifasiga o‘tish
-                          }
+                          context.read<TabProvider>().setTabIndex(1); // Katalog sahifasiga o‘tish
                         },
                         child: IntrinsicWidth(
                           child: Container(

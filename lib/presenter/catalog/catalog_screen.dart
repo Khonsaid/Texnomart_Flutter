@@ -154,7 +154,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
                                           child: DetailScreen(),
                                         )));
                           },
-                          onTapLike: () {},
                         )
                       : ItemProductHorizontal(
                           image: state.filtersResponse?.products?[index].image,

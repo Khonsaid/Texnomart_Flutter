@@ -3,6 +3,7 @@ part of 'home_bloc.dart';
 class HomeState {
   final bool isLoading;
   final String? error;
+  final bool stateUpdateKey; // Unique key qo'shish
   final List<String>? sliderList;
   final SpecialCategoriesResponse? specialCategories;
   final ProductResponse? hitProductsResponse;
@@ -13,6 +14,7 @@ class HomeState {
     this.brendsResponse,
     this.isLoading = false,
     this.error,
+    this.stateUpdateKey = false,
     this.sliderList,
     this.specialCategories,
     this.hitProductsResponse,
@@ -22,6 +24,7 @@ class HomeState {
   HomeState copyWith({
     BrendsResponse? brendsResponse,
     bool? isLoading,
+    bool? stateUpdateKey,
     String? error,
     List<String>? sliderList,
     SpecialCategoriesResponse? specialCategories,
@@ -29,6 +32,7 @@ class HomeState {
     ProductResponse? newProductsResponse,
   }) =>
       HomeState(
+        stateUpdateKey: stateUpdateKey ?? this.stateUpdateKey,
         brendsResponse: brendsResponse ?? this.brendsResponse,
         isLoading: isLoading ?? this.isLoading,
         error: error ?? this.error,

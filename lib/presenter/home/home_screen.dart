@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:texnomart/data/model/favaurite_model.dart';
 import 'package:texnomart/presenter/home/widgets/carousel_slider.dart';
 import 'package:texnomart/presenter/home/widgets/item_popular_cateogry.dart';
 import 'package:texnomart/utils/colors.dart';
@@ -44,8 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.only(bottom: CupertinoContextMenu.kOpenBorderRadius),
-          child: BlocConsumer<HomeBloc, HomeState>(
-            listener: (context, state) {},
+          child: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
               return RefreshIndicator(
                 color: AppColors.primaryColor,
@@ -152,8 +150,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => BlocProvider(
-                                                  create: (context) =>
-                                                      CatalogBloc()..add(LoadCatalogEvent('hity-prodazh', 'Xit savdo')),
+                                                  create: (context) => CatalogBloc()
+                                                    ..add(LoadCatalogEvent('hity-prodazh', 'Xit savdo')),
                                                   child: CatalogScreen(),
                                                 )));
                                   },
@@ -175,18 +173,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
                                   return ItemProduct(
-                                    onTapLike: () {
-                                      context.read<HomeBloc>().add(ClickFavouriteEvent(
-                                          type: 'xit',
-                                          product: FavouriteModel(
-                                            productId: state.newProductsResponse?.data?.data?[index].id,
-                                            image: state.newProductsResponse?.data?.data?[index].image,
-                                            name: state.newProductsResponse?.data?.data?[index].name,
-                                            price: state.newProductsResponse?.data?.data?[index].salePrice,
-                                            minimalLoan:
-                                                "${state.newProductsResponse?.data?.data?[index].axiomMonthlyPrice} so'mdan ${state.newProductsResponse?.data?.data?[index].axiomMonthlyPrice}/oy",
-                                          )));
-                                    },
                                     onTap: () async {
                                       final result = await Navigator.push(
                                           context,
@@ -204,8 +190,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   )));
                                       // Agar natija qaytsa va like o'zgargan bo'lsa
                                       if (result != null && result is Map<String, dynamic>) {
-                                        context.read<HomeBloc>().add(
-                                            ClickFavouriteEvent(type: 'xit', product: result['productId']));
+                                        context
+                                            .read<HomeBloc>()
+                                            .add(ClickFavouriteEvent(product: result['productId']));
                                       }
                                     },
                                     image: state.hitProductsResponse?.data?.data?[index].image,
@@ -286,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     salePrice: state.newProductsResponse?.data?.data?[index].salePrice,
                                     axiomMonthlyPrice:
                                         state.newProductsResponse?.data?.data?[index].axiomMonthlyPrice,
-                                    onTapLike: () {
+                                    /*onTapLike: () {
                                       context.read<HomeBloc>().add(ClickFavouriteEvent(
                                           type: 'new',
                                           product: FavouriteModel(
@@ -297,7 +284,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             minimalLoan:
                                                 "${state.newProductsResponse?.data?.data?[index].axiomMonthlyPrice} so'mdan ${state.newProductsResponse?.data?.data?[index].axiomMonthlyPrice}/oy",
                                           )));
-                                    },
+                                    },*/
                                     onTap: () async {
                                       final result = await Navigator.push(
                                           context,
@@ -314,8 +301,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     child: DetailScreen(),
                                                   )));
                                       if (result != null && result is Map<String, dynamic>) {
-                                        context.read<HomeBloc>().add(
-                                            ClickFavouriteEvent(type: 'new', product: result['productId']));
+                                        context
+                                            .read<HomeBloc>()
+                                            .add(ClickFavouriteEvent(product: result['productId']));
                                       }
                                     },
                                   );

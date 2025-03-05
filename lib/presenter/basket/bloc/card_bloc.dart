@@ -55,13 +55,11 @@ class CardBloc extends Bloc<CardEvent, CardState> {
     });
 
     on<BasketItemsUpdatedEvent>((event, emit) {
-      print("TTT befor ${state.basketList?[0].count}");
       HiveHelper.updateBasketModel(event.id, event.count, event.isChecked);
       final baskets = HiveHelper.getBasket();
       add(CalculateSumEvent());
 
       final isAllChecked = baskets.every((element) => element.isChecked == true);
-      print("TTT after ${state.basketList?[0].count}");
 
       emit(state.copyWith(basketList: baskets, isCheckedAll: isAllChecked));
     });

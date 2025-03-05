@@ -4,20 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:texnomart/data/model/favaurite_model.dart';
+import 'package:texnomart/presenter/bottom/tab_provider.dart';
 import 'package:texnomart/presenter/detail/widgets/item_offers_by_character.dart';
 import 'package:texnomart/presenter/detail/widgets/item_offers_by_images.dart';
+import 'package:texnomart/presenter/map/address_screen.dart';
 import 'package:texnomart/utils/colors.dart';
 import 'package:texnomart/utils/extension.dart';
 
 import '../../../data/model/basket_model.dart';
 import '../basket/bloc/card_bloc.dart';
 import '../basket/bloc/card_event.dart';
-import '../bottom/bottom_nav_bar.dart';
 import '../home/widgets/btn_add_basket.dart';
 import '../map/bloc/map_bloc.dart';
-import '../map/map_screen.dart';
 import '../widgets/home_load_price.dart';
 import '../widgets/loading.dart';
 import '../widgets/shimmer_effect_widget.dart';
@@ -96,7 +95,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         name: state.detailResponse?.data?.name,
                         price: state.detailResponse?.data?.loanPrice,
                         minimalLoan:
-                            "${state.detailResponse?.data?.minimalLoanPrice?.minMonthlyPrice ?? '0'} so'mdan ${state.detailResponse?.data?.minimalLoanPrice?.monthNumber??'0'}/oy",
+                            "${state.detailResponse?.data?.minimalLoanPrice?.minMonthlyPrice ?? '0'} so'mdan ${state.detailResponse?.data?.minimalLoanPrice?.monthNumber ?? '0'}/oy",
                       )));
                 },
                 icon: SvgPicture.asset(state.isLiked ?? false
@@ -125,10 +124,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                     fit: BoxFit.cover,
                                     progressIndicatorBuilder: (_, url, downloadProgress) {
                                       return SizedBox(
-                                        width: double.infinity,
-                                        height: double.infinity,
-                                        child: ShimmerEffectWidget()
-                                      );
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                          child: ShimmerEffectWidget());
                                     },
                                     errorWidget: (context, url, error) => Icon(
                                       Icons.error_outline,
@@ -239,12 +237,8 @@ class _DetailScreenState extends State<DetailScreen> {
                             isAdded: state.isAdded ?? false,
                             onTapBasket: () {
                               if (state.isAdded ?? false) {
-                                final containerState =
-                                    context.findAncestorStateOfType<ContainerScreenState>();
-                                if (containerState != null) {
-                                  Navigator.pop(context);
-                                  containerState.setTabIndex(2);
-                                }
+                                Navigator.pop(context);
+                                context.read<TabProvider>().setTabIndex(2);
                               } else {
                                 context.read<CardBloc>().add(AddBasketItemEvent(BasketModel(
                                       productId: state.detailResponse?.data?.id,
@@ -268,7 +262,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                         builder: (context) => BlocProvider(
                                               create: (context) =>
                                                   MapBloc()..add(LoadMapData(state.addressResponse?.data)),
-                                              child: MapScreen(),
+                                              child: AddressScreen(),
                                             )));
                               },
                               child: Container(
@@ -446,11 +440,8 @@ class _DetailScreenState extends State<DetailScreen> {
                       isAdded: state.isAdded ?? false,
                       onTap: () {
                         if (state.isAdded ?? false) {
-                          final containerState = context.findAncestorStateOfType<ContainerScreenState>();
-                          if (containerState != null) {
-                            Navigator.pop(context);
-                            containerState.setTabIndex(2);
-                          }
+                          Navigator.pop(context);
+                          context.read<TabProvider>().setTabIndex(2);
                         } else {
                           context.read<CardBloc>().add(AddBasketItemEvent(BasketModel(
                                 productId: state.detailResponse?.data?.id,

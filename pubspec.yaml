@@ -60,9 +60,13 @@ dependencies:
   yandex_maps_mapkit_lite: ^4.11.0-beta
   geolocator: ^10.1.0
 
+  flutter_launcher_icons: ^0.14.3
+  flutter_native_splash: ^2.4.4
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  url_launcher: ^6.3.1
+  provider: ^6.1.2
 
 dev_dependencies:
   flutter_test:
@@ -80,6 +84,19 @@ dev_dependencies:
   json_serializable: ^6.8.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_native_splash:
+  color: "#FBC100"
+  image: assets/images/appstore.png  # PNG formatda ekanligiga ishonch hosil qiling
+
+  android_12:
+    image:  assets/images/appstore.png
+    icon_background_color: "#FBC100"
+    color: "#FBC100"
+
+  android_gravity: center
+  ios_content_mode: scaleAspectFit
+
 
 # The following section is specific to Flutter packages.
 flutter:

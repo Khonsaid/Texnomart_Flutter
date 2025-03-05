@@ -11,8 +11,9 @@ class ClickProductEvent extends HomeEvent {
 }
 
 class ClickFavouriteEvent extends HomeEvent {
-  final String type;
   final FavouriteModel product;
 
-  ClickFavouriteEvent({required this.type, required this.product});
+  ClickFavouriteEvent({required this.product});
 }
+class LoadProducts extends HomeEvent{}
+

@@ -11,7 +11,7 @@ import '../../data/model/favaurite_model.dart';
 import '../../data/scource/locel/hive_helper.dart';
 import '../basket/bloc/card_bloc.dart';
 import '../basket/bloc/card_event.dart';
-import '../bottom/bottom_nav_bar.dart';
+import '../bottom/tab_provider.dart';
 
 class ItemProductHorizontal extends StatefulWidget {
   final int? id;
@@ -162,11 +162,7 @@ class _ItemProductHorizontalState extends State<ItemProductHorizontal> {
                                 borderRadius: BorderRadius.circular(12),
                                 onTap: () {
                                   if (isAdded) {
-                                    final containerState =
-                                        context.findAncestorStateOfType<ContainerScreenState>();
-                                    if (containerState != null) {
-                                      containerState.setTabIndex(2);
-                                    }
+                                    context.read<TabProvider>().setTabIndex(2);
                                   } else {
                                     setState(() {
                                       _toggleBasket();

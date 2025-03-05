@@ -11,7 +11,7 @@ import '../../data/model/favaurite_model.dart';
 import '../../data/scource/locel/hive_helper.dart';
 import '../basket/bloc/card_bloc.dart';
 import '../basket/bloc/card_event.dart';
-import '../bottom/bottom_nav_bar.dart';
+import '../bottom/tab_provider.dart';
 
 class ItemProduct extends StatefulWidget {
   final int? id;
@@ -20,12 +20,10 @@ class ItemProduct extends StatefulWidget {
   final int? salePrice;
   final String? axiomMonthlyPrice;
   final VoidCallback onTap;
-  final VoidCallback onTapLike;
 
   const ItemProduct({
     super.key,
     required this.onTap,
-    required this.onTapLike,
     required this.image,
     required this.name,
     required this.salePrice,
@@ -49,13 +47,14 @@ class _ItemProductState extends State<ItemProduct> {
   }
 
   void _toggleFavourite() {
-    HiveHelper.toggleFavourite(FavouriteModel(
+    context.read<CardBloc>().add(ToggleFavouriteEvent(FavouriteModel(
         productId: widget.id ?? 0,
         image: widget.image,
         name: widget.name,
         price: widget.salePrice,
-        minimalLoan: widget.axiomMonthlyPrice));
-    isLiked = HiveHelper.hasFavourite(widget.id ?? 0);
+        minimalLoan: widget.axiomMonthlyPrice)));
+    // HiveHelper.toggleFavourite();
+    isLiked = !isLiked; //HiveHelper.hasFavourite(widget.id ?? 0);
   }
 
   void _toggleBasket() {
@@ -101,7 +100,6 @@ class _ItemProductState extends State<ItemProduct> {
                           child: Column(spacing: 8, children: [
                             InkWell(
                               onTap: () {
-                                widget.onTapLike();
                                 setState(() {
                                   _toggleFavourite();
                                 });
@@ -163,11 +161,7 @@ class _ItemProductState extends State<ItemProduct> {
                                 borderRadius: BorderRadius.circular(12),
                                 onTap: () {
                                   if (isAdded) {
-                                    final containerState =
-                                        context.findAncestorStateOfType<ContainerScreenState>();
-                                    if (containerState != null) {
-                                      containerState.setTabIndex(2);
-                                    }
+                                    context.read<TabProvider>().setTabIndex(2);
                                   } else {
                                     setState(() {
                                       _toggleBasket();
